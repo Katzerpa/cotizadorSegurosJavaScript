@@ -162,7 +162,27 @@ function monthlyCoverageAmounts(planSelect) {
 //****Solicita Datos de Entrada***/
 let firstName = prompt("Ingresa tu nombre");
 let lastName = prompt("Ingrese su Apellido");
-let inputAge = parseInt(prompt("Ingrese su edad"));
+let fdateBirthDate = prompt("Ingrese su fecha de nacimiento en formato DD/MM/YYYY");
+let inputAge = calculateAge(fdateBirthDate);
+
+
+function calculateAge(fdateBirthDate) {
+// Dividir la fecha de nacimiento en día, mes y año
+    let partsDate = fdateBirthDate.split("/");
+    let day = parseInt(partsDate[0]);
+    let month = parseInt(partsDate[1]) - 1; // Restar 1 al mes porque los meses en JavaScript son 0-indexados
+    let year = parseInt(partsDate[2]);
+// Crear un objeto Date con la fecha de nacimiento
+    let birthDate = new Date(year, month, day);  
+// Obtener la fecha actual
+    let currentDate = new Date();
+// Calcular la diferencia en milisegundos      
+let differenceMilliseconds = currentDate - birthDate ;
+// Convertir la diferencia de milisegundos a años   
+    let inputAge = Math.floor(differenceMilliseconds / (1000 * 60 * 60 * 24 * 365));
+ 
+return inputAge;
+}
 
 user = new UserData(firstName, lastName, inputAge);
 
@@ -173,6 +193,7 @@ alert(messages[0]);
 let x = 0;
 
 do {
+    console.log("Edad actual " + user.age);
     if (user.validAge()) {
         let planSelect = selectPlan();
         let showCover = monthlyCoverageAmounts(planSelect);
@@ -191,28 +212,29 @@ do {
 
 //----------------------------------------------
 
-// Agregar las filas con los datos de cobertura
-let coberturas = [
-    { nombre: "Robo Celular", monto: showCover.currencyPolicy.coverage_01 },
-    { nombre: "Reparación Celular", monto: showCover.currencyPolicy.coverage_02 },
-    { nombre: "Otra Cobertura", monto: showCover.currencyPolicy.coverage_03 }
+// Agregar las filas con los datos de cobertura 
+let coverages = [
+    { name: "Robo Celular", amount: showCover.currencyPolicy.coverage_01 },
+    { name: "Reparación Celular", amount: showCover.currencyPolicy.coverage_02 },
+    { name: "Otra Cobertura", amount: showCover.currencyPolicy.coverage_03 }
 ];
 
 document.write("<table border=1>");
 document.write("<tr>");
 document.write("    <th>Cobertura</th><th>Monto</th>");
 document.write("</tr>");
-coberturas.forEach(cobertura => {
-    document.write("<tr>");
-        if(cobertura.monto>0){
-            document.write("<td>"+cobertura.nombre+"</td><td>"+cobertura.monto.toFixed(2)+"</td>");}
-    document.write("</tr>");
+coverages
+    .filter(coverage =>coverage.amount>0)
+    .forEach(coverage => {
+        document.write("<tr>");
+        document.write("<td>"+coverage.name+"</td><td>"+coverage.amount.toFixed(2)+"</td>");
+        document.write("</tr>");
 });
 document.write("<tr>");
 document.write("    <th>Monto total anual:</th><td>"+showCover.currencyPolicy.totalAmount.toFixed(2)+"</td>");
 document.write("</tr>");
 document.write("<tr>");
-document.write("    <th>monto premio::</th><td>"+showCover.currencyPolicy.totalAmount.toFixed(2)+"</td>");
+document.write("    <th>monto premio::</th><td>"+(showCover.currencyPolicy.totalAmount / 12).toFixed(2)+"</td>");
 document.write("</tr>");
 document.write("</table>");
 
@@ -225,8 +247,10 @@ document.write("</table>");
         break;
         i = 100;
     }
-    inputAge = parseInt(prompt("Ingrese su edad valida"));
-    this.age = inputAge;
+    //inputAge = parseInt(prompt("Ingrese su edad valida"));
+    fdateBirthDate = prompt("Ingrese su fecha de nacimiento Valida en formato DD/MM/YYYY");
+    inputAge = calculateAge(fdateBirthDate);
+    user.age = inputAge;
     x++;
 } while (x < 3);
 
