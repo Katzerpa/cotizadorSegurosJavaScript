@@ -4,10 +4,30 @@
  * katzerpa
  */
 
+
+//=============================================================
+//Constantes
+//=============================================================
+const PLAN_BASIC = "Plan Básico";
+const PLAN_STANDART = "Plan Estándar";
+const PLAN_PREMIUM = "Plan Premium";
+
+const PLAN_BASIC_CAPITAL = 750000;
+const PLAN_STANDART_CAPITAL = 850000;
+const PLAN_PREMIUM_CAPITAL = 950000;
+
+//=============================================================
+//Mensajes
+//=============================================================
+let messages= new Array();
+messages[0] = "Has cancelado la entrada de datos.O eres menor de edad , hasta pronto <br>";
+messages[1] = "Selección inválida";
+messages[2] = "Selección inválida. Por favor, selecciona un plan válido."
+
+
 //=============================================================
 //Clases
 //=============================================================
-
 class UserData {
     constructor(firstName, lastName, age) {
         this.firstName = firstName.toUpperCase();
@@ -26,7 +46,7 @@ class UserData {
         if (this.firstName !== null && this.lastName !== null) {
             document.write(`<h1>¡Hola, ${this.firstName}  ${this.lastName} ! Bienvenido </h1> <br>`);
         } else {
-            document.write("Has cancelado la entrada de datos.O eres menor de edad , hasta pronto <br>");
+            document.write(messages[0]);
         }
     }
 }
@@ -82,27 +102,27 @@ class PremiumPolicy extends Policy {
 function selectPlan() {
     // Mostrar las opciones de plan al usuario
     let options = "Selecciona un plan:\n1. Plan Básico\n2. Plan Estándar\n3. Plan Premium";
+
     let selectValue = prompt(options);
     let namePlan;
     //=============================================================
     // Validar la selección del usuario y asigna suma segurada
     let ncapital = 0;
     switch (selectValue) {
-
         case "1":
-            ncapital = 750000;
-            namePlan = "Plan Básico";
+            ncapital = PLAN_BASIC_CAPITAL;
+            namePlan = PLAN_BASIC;
             return { namePlan: namePlan, ncapital: ncapital };
         case "2":
-            ncapital = 850000;
-            namePlan = "Plan Estándar";
+            ncapital = PLAN_STANDART_CAPITAL;
+            namePlan = PLAN_STANDART;
             return { namePlan: namePlan, ncapital: ncapital };
         case "3":
-            ncapital = 950000;
-            namePlan = "Plan Premium";
+            ncapital = PLAN_PREMIUM_CAPITAL;
+            namePlan = PLAN_PREMIUM;
             return { namePlan: namePlan, ncapital: ncapital };
         default:
-            return "Selección inválida";
+            return messages[1];
     }
 }
 //=============================================================
@@ -114,26 +134,26 @@ function monthlyCoverageAmounts(planSelect) {
     let currencyPolicy;
 
     switch (planSelect.namePlan) {
-        case "Plan Básico":
+        case PLAN_BASIC:
             alert("Plan Básico");
-            policyBasic = new BasicPolicy("Plan Basico", planSelect.ncapital);
+            policyBasic = new BasicPolicy(PLAN_BASIC, planSelect.ncapital);
             policyBasic.calculateMonthlyCoverageAmounts();
             return { itemQuantity: 2, currencyPolicy: policyBasic };
 
-        case "Plan Estándar":
+        case PLAN_STANDART:
             alert("Plan Estándar");
-            policyStandart = new StandartPolicy("Plan Estándar", planSelect.ncapital);
+            policyStandart = new StandartPolicy(PLAN_STANDART, planSelect.ncapital);
             policyStandart.calculateMonthlyCoverageAmounts();
             return { itemQuantity: 2, currencyPolicy: policyStandart };
 
-        case "Plan Premium":
+        case PLAN_PREMIUM:
             alert("Plan Premium");
-            policyPremium = new PremiumPolicy("Plan Premium", planSelect.ncapital);
+            policyPremium = new PremiumPolicy(PLAN_PREMIUM, planSelect.ncapital);
             policyPremium.calculateMonthlyCoverageAmounts();
             return { itemQuantity: 3, currencyPolicy: policyPremium };
 
         default:
-            return "Selección inválida";
+            return messages[1];
 
     }
 
@@ -149,7 +169,7 @@ user = new UserData(firstName, lastName, inputAge);
 //=============================================================
 // Seleccionar Menu plan
 //=============================================================
-
+alert(messages[0]);
 let x = 0;
 
 do {
@@ -158,37 +178,48 @@ do {
         let showCover = monthlyCoverageAmounts(planSelect);
        
         // Mostrar el plan seleccionado
-        if (planSelect !== "Selección inválida") {
+        if (planSelect !== messages[1]) {
             let montoFormateado = parseFloat(planSelect.ncapital).toLocaleString('es-ES', { style: 'currency', currency: 'ARS' });
             document.write(`<h3> Has seleccionado el plan:   ${planSelect.namePlan}</h3><br>` + `<h3>con una suma asegurada:  $${montoFormateado}</h3><br>`);
         } else {
-            document.write("Selección inválida. Por favor, selecciona un plan válido.");
+            document.write(messages[2]);
         }
          //Llamado de funcion  para mostrar nombre del usuario
          user.getUserData();
         // Llamada a la función para  mostrar el plan y coberturas
-        if (showCover !== "Selección inválida") {
-            alert(showCover.currencyPolicy.policyType);
-            for (i = 1; i <= showCover.itemQuantity; i++) {
+        if (showCover !== messages[1]) {
 
-                if (i === 1) {
-                    document.write(`Robo Celular ------------------------ Monto: ${showCover.currencyPolicy.coverage_01.toLocaleString('es-ES', { style: 'currency', currency: 'ARS' })} <br>`);
-                }
+//----------------------------------------------
 
-                if (i === 2) {
-                    document.write(`Reparacion Celular ----------------- Monto: ${showCover.currencyPolicy.coverage_02.toLocaleString('es-ES', { style: 'currency', currency: 'ARS' })} <br>`);
-                }
+// Agregar las filas con los datos de cobertura
+let coberturas = [
+    { nombre: "Robo Celular", monto: showCover.currencyPolicy.coverage_01 },
+    { nombre: "Reparación Celular", monto: showCover.currencyPolicy.coverage_02 },
+    { nombre: "Otra Cobertura", monto: showCover.currencyPolicy.coverage_03 }
+];
 
-                if (i === 3) {
-                    document.write(`Reparacion Celular ----------------- Monto: ${showCover.currencyPolicy.coverage_03.toLocaleString('es-ES', { style: 'currency', currency: 'ARS' })} <br>`);
-                }
-            }
-            document.write("<br>");
-            document.write("<br>");
-            document.write(`<strong> monto total anual:</strong> ${showCover.currencyPolicy.totalAmount.toLocaleString('es-ES', { style: 'currency', currency: 'ARS' })} <br> 
-     <strong> monto premio: </strong> ${(showCover.currencyPolicy.totalAmount / 12).toLocaleString('es-ES', { style: 'currency', currency: 'ARS' })}  <br>`);
+document.write("<table border=1>");
+document.write("<tr>");
+document.write("    <th>Cobertura</th><th>Monto</th>");
+document.write("</tr>");
+coberturas.forEach(cobertura => {
+    document.write("<tr>");
+        if(cobertura.monto>0){
+            document.write("<td>"+cobertura.nombre+"</td><td>"+cobertura.monto.toFixed(2)+"</td>");}
+    document.write("</tr>");
+});
+document.write("<tr>");
+document.write("    <th>Monto total anual:</th><td>"+showCover.currencyPolicy.totalAmount.toFixed(2)+"</td>");
+document.write("</tr>");
+document.write("<tr>");
+document.write("    <th>monto premio::</th><td>"+showCover.currencyPolicy.totalAmount.toFixed(2)+"</td>");
+document.write("</tr>");
+document.write("</table>");
+
+//----------------------------------------------
+
         } else {
-            document.write("Selección inválida. Por favor, selecciona un plan válido.");
+            document.write(messages[2]);
         }
 
         break;
