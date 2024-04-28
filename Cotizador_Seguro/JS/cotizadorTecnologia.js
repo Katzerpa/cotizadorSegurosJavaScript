@@ -1,67 +1,91 @@
-
 /**
- * cotizador de Seguro Tecnologia .. solo mayores de Edad
+ * cotizador de Seguro Tecnologia
+ * v2-refactor con clases y objetos
  * katzerpa
  */
 
-
-//Declaracion de Funciones
-
 //=============================================================
-//Datos del Usuario 
+//Clases
 //=============================================================
-function setUserData() {
-    let firstName = prompt("Ingresa tu nombre");
-    let lastName = prompt("ingrese su Apellido");
 
-    // Comprobar si el usuario ha cancelado la entrada de datos
-
-    if (firstName === null || lastName === null) {
-        return null; // Si el usuario cancela, devolvemos null
+class UserData {
+    constructor(firstName, lastName, age) {
+        this.firstName = firstName.toUpperCase();
+        this.lastName = lastName.toUpperCase();
+        this.age = age;
+    }
+    // valida edad
+    validAge() {
+        if (this.age > 17) { return true; }
+        return false;
     }
 
-// Validar mayor de Edad
-    let i = 0;
-  
-    do {
-        
-        let age = Number(prompt("ingrese tu edad"));
-
-        if ( parseInt(age) > 17 ) {
-            return { firstName: firstName.toUpperCase(), lastName: lastName.toUpperCase(), age: age };
+    // mostrar Datos usuario
+    getUserData() {
+        // Verificamos si se proporcionó un nombre y un apellido
+        if (this.firstName !== null && this.lastName !== null) {
+            document.write(`<h1>¡Hola, ${this.firstName}  ${this.lastName} ! Bienvenido </h1> <br>`);
+        } else {
+            document.write("Has cancelado la entrada de datos.O eres menor de edad , hasta pronto <br>");
         }
-        i++;
-
-    } while (i < 3); //validar tres intentos para la edad
-
-    alert("Lo siento no podemos ofertar seguros para usted en estos momentos");
-    return ; // corta la cotizacion y no avanza
+    }
 }
-//=============================================================
-function getUserData() {
-    let fullName = setUserData();
 
-    // Verificamos si se proporcionó un nombre y un apellido
-    if (fullName !== null) {
+//Clase Poliza
+class Policy {
+    policyType = "";
+    capital = 0.00;
+    coverage_01 = 0.00;
+    coverage_02 = 0.00;
+    coverage_03 = 0.00;
+    totalAmount = 0.00;
+    amountNcapital = 0.00;
 
-        document.write(`<h1>¡Hola, ${fullName.firstName}  ${fullName.lastName} ! Bienvenido </h1> <br>`);
+    constructor(policyType, capital) {
+        this.policyType = policyType;
+        this.capital = capital;
+    }
 
-    } else {
-        document.write("Has cancelado la entrada de datos.O eres menor de edad , hasta pronto <br>");
+}
+//Sub-clase poliza basica
+class BasicPolicy extends Policy {
+    calculateMonthlyCoverageAmounts() {
+        this.amountNcapital = this.capital * 1.70 / 12;
+        this.coverage_01 = this.amountNcapital * 1.70 / 12;
+        this.coverage_02 = this.amountNcapital * 1.30 / 12;
+        this.totalAmount = this.coverage_01 + this.coverage_02;
+    }
+}
+//Sub-clase poliza standart
+class StandartPolicy extends Policy {
+    calculateMonthlyCoverageAmounts() {
+        this.amountNcapital = this.capital * 1.80 / 12;
+        this.coverage_01 = this.amountNcapital * 1.70 / 12;
+        this.coverage_02 = this.amountNcapital * 1.30 / 12;
+        this.totalAmount = this.coverage_01 + this.coverage_02;
+    }
+}
+//Sub-clase poliza premium
+class PremiumPolicy extends Policy {
+    calculateMonthlyCoverageAmounts() {
+        this.amountNcapital = this.capital * 1.90 / 12;
+        this.coverage_01 = this.amountNcapital * 1.60 / 12;
+        this.coverage_02 = this.amountNcapital * 1.50 / 12;
+        this.coverage_03 = this.amountNcapital * 1.80 / 12;
+        this.totalAmount = this.coverage_01 + this.coverage_02 + this.coverage_03;
     }
 }
 
 //=============================================================
-// Seleccionar Menu plan
+// Planes
 //=============================================================
 function selectPlan() {
     // Mostrar las opciones de plan al usuario
     let options = "Selecciona un plan:\n1. Plan Básico\n2. Plan Estándar\n3. Plan Premium";
     let selectValue = prompt(options);
     let namePlan;
-//=============================================================
-// Validar la selección del usuario y asigna suma segurada
-
+    //=============================================================
+    // Validar la selección del usuario y asigna suma segurada
     let ncapital = 0;
     switch (selectValue) {
 
@@ -82,41 +106,31 @@ function selectPlan() {
     }
 }
 //=============================================================
-// Funcion para calcular cobertura 
+// Coberturas 
 //=============================================================
-function monthlyCoverageAmounts(planSelect) {//calcular coberturas
-    let ncover1 = 0;
-    let ncover2 = 0;
-    let ncover3 = 0;
-    let totalAmount = 0;
-    let amountNcapital = 0;
+function monthlyCoverageAmounts(planSelect) {
+    //calcular coberturas
     let itemQuantity = 0;
+    let currencyPolicy;
 
     switch (planSelect.namePlan) {
         case "Plan Básico":
-            amountNcapital = planSelect.ncapital * 1.70 / 12;
-            ncover1 = amountNcapital * 1.70 / 12;
-            ncover2 = amountNcapital * 1.30 / 12;
-            totalAmount = ncover1 + ncover2;
-            itemQuantity = 1;
-            return { ncover1: ncover1, ncover2: ncover2, totalAmount: totalAmount, itemQuantity: itemQuantity };
+            alert("Plan Básico");
+            policyBasic = new BasicPolicy("Plan Basico", planSelect.ncapital);
+            policyBasic.calculateMonthlyCoverageAmounts();
+            return { itemQuantity: 2, currencyPolicy: policyBasic };
 
         case "Plan Estándar":
-            amountNcapital = planSelect.ncapital * 1.80 / 12;
-            ncover1 = amountNcapital * 1.70 / 12;
-            ncover2 = amountNcapital * 1.30 / 12;
-            totalAmount = ncover1 + ncover2;
-            itemQuantity = 2;
-            return { ncover1: ncover1, ncover2: ncover2, totalAmount: totalAmount, itemQuantity: itemQuantity };
+            alert("Plan Estándar");
+            policyStandart = new StandartPolicy("Plan Estándar", planSelect.ncapital);
+            policyStandart.calculateMonthlyCoverageAmounts();
+            return { itemQuantity: 2, currencyPolicy: policyStandart };
 
         case "Plan Premium":
-            amountNcapital = planSelect.ncapital * 1.90 / 12;
-            ncover1 = amountNcapital * 1.60 / 12;
-            ncover2 = amountNcapital * 1.50 / 12;
-            ncover3 = amountNcapital * 1.80 / 12;
-            totalAmount = ncover1 + ncover2 + ncover3;
-            itemQuantity = 3;
-            return { ncover1: ncover1, ncover2: ncover2, ncover3: ncover3, totalAmount: totalAmount, itemQuantity: itemQuantity };
+            alert("Plan Premium");
+            policyPremium = new PremiumPolicy("Plan Premium", planSelect.ncapital);
+            policyPremium.calculateMonthlyCoverageAmounts();
+            return { itemQuantity: 3, currencyPolicy: policyPremium };
 
         default:
             return "Selección inválida";
@@ -124,43 +138,68 @@ function monthlyCoverageAmounts(planSelect) {//calcular coberturas
     }
 
 }
+//Ejecucion - objetos
+//****Solicita Datos de Entrada***/
+let firstName = prompt("Ingresa tu nombre");
+let lastName = prompt("Ingrese su Apellido");
+let inputAge = parseInt(prompt("Ingrese su edad"));
+
+user = new UserData(firstName, lastName, inputAge);
 
 //=============================================================
-//Mostrar Data
+// Seleccionar Menu plan
 //=============================================================
 
-//Llamado de funcion  para mostrar nombre del usuario
-    getUserData();
-// Llamada a la función para  mostrar el plan 
-    let planSelect = selectPlan();
-    let showCover = monthlyCoverageAmounts(planSelect);
-// Mostrar el plan seleccionado
-if (planSelect !== "Selección inválida") {
-    let montoFormateado = parseFloat(planSelect.ncapital).toLocaleString('es-ES', { style: 'currency', currency: 'ARS' });
-    document.write(`<h3> Has seleccionado el plan:   ${planSelect.namePlan}</h3><br>` + `<h3>con una suma asegurada:  $${montoFormateado}</h3><br>`);
-} else {
-    document.write("Selección inválida. Por favor, selecciona un plan válido.");
-}
-//motrar coberturas 
-if (showCover !== "Selección inválida") {
-    for (i = 1; i <= showCover.itemQuantity; i++) {
-        if (i === 1) {
-            document.write(`Robo Celular ------------------------ Monto: ${showCover.ncover1.toLocaleString('es-ES', { style: 'currency', currency: 'ARS' })} <br>`);
+let x = 0;
+
+do {
+    if (user.validAge()) {
+        let planSelect = selectPlan();
+        let showCover = monthlyCoverageAmounts(planSelect);
+       
+        // Mostrar el plan seleccionado
+        if (planSelect !== "Selección inválida") {
+            let montoFormateado = parseFloat(planSelect.ncapital).toLocaleString('es-ES', { style: 'currency', currency: 'ARS' });
+            document.write(`<h3> Has seleccionado el plan:   ${planSelect.namePlan}</h3><br>` + `<h3>con una suma asegurada:  $${montoFormateado}</h3><br>`);
+        } else {
+            document.write("Selección inválida. Por favor, selecciona un plan válido.");
+        }
+         //Llamado de funcion  para mostrar nombre del usuario
+         user.getUserData();
+        // Llamada a la función para  mostrar el plan y coberturas
+        if (showCover !== "Selección inválida") {
+            alert(showCover.currencyPolicy.policyType);
+            for (i = 1; i <= showCover.itemQuantity; i++) {
+
+                if (i === 1) {
+                    document.write(`Robo Celular ------------------------ Monto: ${showCover.currencyPolicy.coverage_01.toLocaleString('es-ES', { style: 'currency', currency: 'ARS' })} <br>`);
+                }
+
+                if (i === 2) {
+                    document.write(`Reparacion Celular ----------------- Monto: ${showCover.currencyPolicy.coverage_02.toLocaleString('es-ES', { style: 'currency', currency: 'ARS' })} <br>`);
+                }
+
+                if (i === 3) {
+                    document.write(`Reparacion Celular ----------------- Monto: ${showCover.currencyPolicy.coverage_03.toLocaleString('es-ES', { style: 'currency', currency: 'ARS' })} <br>`);
+                }
+            }
+            document.write("<br>");
+            document.write("<br>");
+            document.write(`<strong> monto total anual:</strong> ${showCover.currencyPolicy.totalAmount.toLocaleString('es-ES', { style: 'currency', currency: 'ARS' })} <br> 
+     <strong> monto premio: </strong> ${(showCover.currencyPolicy.totalAmount / 12).toLocaleString('es-ES', { style: 'currency', currency: 'ARS' })}  <br>`);
+        } else {
+            document.write("Selección inválida. Por favor, selecciona un plan válido.");
         }
 
-        if (i === 2) {
-            document.write(`Reparacion Celular ----------------- Monto: ${showCover.ncover2.toLocaleString('es-ES', { style: 'currency', currency: 'ARS' })} <br>`);
-        }
-        
-        if (i === 3) {
-            document.write(`Reparacion Celular ----------------- Monto: ${showCover.ncover3.toLocaleString('es-ES', { style: 'currency', currency: 'ARS' })} <br>`);
-        }
+        break;
+        i = 100;
     }
-    document.write("<br>");
-    document.write("<br>");
-    document.write(`<strong> monto total anual:</strong> ${showCover.totalAmount.toLocaleString('es-ES', { style: 'currency', currency: 'ARS' })} <br> 
-     <strong> monto premio: </strong> ${(showCover.totalAmount / 12).toLocaleString('es-ES', { style: 'currency', currency: 'ARS' })}  <br>`);
-} else {
-    document.write("Selección inválida. Por favor, selecciona un plan válido.");
+    inputAge = parseInt(prompt("Ingrese su edad valida"));
+    this.age = inputAge;
+    x++;
+} while (x < 3);
+
+if (x > 2) {
+    alert("Lo siento, no podemos ofrecer seguros para usted en estos momentos.");
 }
 
