@@ -16,6 +16,8 @@ const PLAN_BASIC_CAPITAL = 750000;
 const PLAN_STANDART_CAPITAL = 850000;
 const PLAN_PREMIUM_CAPITAL = 950000;
 
+const SYSTEM_DATE = new Date();
+
 //=============================================================
 //Mensajes
 //=============================================================
@@ -31,7 +33,7 @@ messages[2] = "Selección inválida. Por favor, selecciona un plan válido."
 class UserData {
     constructor(firstName, lastName, age) {
         this.firstName = firstName.toUpperCase();
-        this.lastName = lastName.toUpperCase();
+        this.lastName =  lastName.toUpperCase();
         this.age = age;
     }
     // valida edad
@@ -44,7 +46,8 @@ class UserData {
     getUserData() {
         // Verificamos si se proporcionó un nombre y un apellido
         if (this.firstName !== null && this.lastName !== null) {
-            document.write(`<h1>¡Hola, ${this.firstName}  ${this.lastName} ! Bienvenido </h1> <br>`);
+            const container = document.getElementById("container_greeting");
+            container.innerHTML = (`<center><h1>¡Hola, ${this.firstName}  ${this.lastName} ! Bienvenido </h1></center> <br>`);
         } else {
             document.write(messages[0]);
         }
@@ -189,7 +192,7 @@ user = new UserData(firstName, lastName, inputAge);
 //=============================================================
 // Seleccionar Menu plan
 //=============================================================
-alert(messages[0]);
+
 let x = 0;
 
 do {
@@ -201,7 +204,9 @@ do {
         // Mostrar el plan seleccionado
         if (planSelect !== messages[1]) {
             let montoFormateado = parseFloat(planSelect.ncapital).toLocaleString('es-ES', { style: 'currency', currency: 'ARS' });
-            document.write(`<h3> Has seleccionado el plan:   ${planSelect.namePlan}</h3><br>` + `<h3>con una suma asegurada:  $${montoFormateado}</h3><br>`);
+            document.write(`<center><h3> Fecha de Nacimiento: ${fdateBirthDate}   Edad: ${user.age}</h3></center><br>` + 
+            `<center><h3> Has seleccionado el plan:   ${planSelect.namePlan}</h3></center><br>`+
+            `<center><h3> con una suma asegurada:  $${montoFormateado}</h3></center><br>`);
         } else {
             document.write(messages[2]);
         }
@@ -219,24 +224,25 @@ let coverages = [
     { name: "Otra Cobertura", amount: showCover.currencyPolicy.coverage_03 }
 ];
 
-document.write("<table border=1>");
-document.write("<tr>");
-document.write("    <th>Cobertura</th><th>Monto</th>");
-document.write("</tr>");
+document.write(`<center><table border=1 style="width:70%">`);
+document.write(`<tr>`);
+document.write(`<th style="width:70%; text-align:left;"; >Cobertura</th><th style="width:30%; text-align:right;">Monto</th>`);
+document.write(`</tr>`);
 coverages
     .filter(coverage =>coverage.amount>0)
     .forEach(coverage => {
-        document.write("<tr>");
-        document.write("<td>"+coverage.name+"</td><td>"+coverage.amount.toFixed(2)+"</td>");
-        document.write("</tr>");
+        document.write(`<tr>`);
+        document.write(`<td style="width:70%; text-align:left;">${coverage.name}</td><td style="width:30%; text-align:right;">${coverage.amount.toFixed(2)}</td>`);
+        document.write(`</tr>`);
 });
-document.write("<tr>");
-document.write("    <th>Monto total anual:</th><td>"+showCover.currencyPolicy.totalAmount.toFixed(2)+"</td>");
-document.write("</tr>");
-document.write("<tr>");
-document.write("    <th>monto premio::</th><td>"+(showCover.currencyPolicy.totalAmount / 12).toFixed(2)+"</td>");
-document.write("</tr>");
-document.write("</table>");
+document.write(`<tr>`);
+document.write(`<th style="width:70%; text-align:left;">Monto total anual:</th><td style="width:30%; text-align:right;"> ${showCover.currencyPolicy.totalAmount.toFixed(2)} </td>`);
+document.write(`</tr>`);
+document.write(`<tr>`);
+document.write(`<th style="width:70%; text-align:left;">Monto premio:</th><td style="width:30%; text-align:right;"> ${(showCover.currencyPolicy.totalAmount / 12).toFixed(2)}</td>`);
+document.write(`</tr>`);
+document.write(`</table></center>`);
+document.write(`<center><p> Fecha de la cotizacion  ${SYSTEM_DATE.toLocaleDateString()} </p><center>`);
 
 //----------------------------------------------
 
@@ -247,7 +253,6 @@ document.write("</table>");
         break;
         i = 100;
     }
-    //inputAge = parseInt(prompt("Ingrese su edad valida"));
     fdateBirthDate = prompt("Ingrese su fecha de nacimiento Valida en formato DD/MM/YYYY");
     inputAge = calculateAge(fdateBirthDate);
     user.age = inputAge;
