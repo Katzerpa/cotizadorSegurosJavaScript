@@ -4,7 +4,6 @@ Al ingresar los datos de la persona mostrara tres planes , el cual debe seleccio
 Al seleccionar se mostrara la Suma asegurada , las coberturas con las sumas aseguradas y el monto del premio . 
 
 Para esta primera entrega se consideraron la puntos de la clase 1, 2 , 3 y 4 
-
 Clase 1 Conceptos generales: Sintaxis y variables: declaracion  de variables y apliacacion de prompt, tipos de datos y como hacer se asiganacion al solicitar datos a traves del prompt.
 Clase 2 Control de flujos:  operadores lógicos , estructura IF, IF-ELSE.
 Clase 3 Ciclos e iteraciones: Tipo de Bucle por contadores (For); Tipo de Bucle por condicionales (While, Do-While y Switch).
@@ -29,7 +28,6 @@ Se crea array para la impresion  de cobertura:
    1)Array coverages : (se asigna los nombres de la coberturas con sus respectivos montos, se agrega las funciones : Filter para ubicar la coberturas mayores que ceros y forEach para buscar las coberturas a imprimir)
 Se aplica innerHTML para imprimir en el HTML el  mensaje de  bienvenidad de la persona que esta cotizando 
 Se se agrega en el HTML un Hinperviculo que permitirar volver a cotizar .
-
  Clase que se tomaron en cuenta para la entrega : 
   Clase 5 : Objetos donde se aplicaron Funcion contructora  y metodos de objetos y funciones : creando (Clases, Contructor y objetos).
   Clase 6 : Array donde se  creo: un array vacios para asignar los mensajes con una funcion buscador de mensaje con la propiedad length y un array para las impresiones de cobertura
