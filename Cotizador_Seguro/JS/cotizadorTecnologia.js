@@ -25,6 +25,7 @@ let messages= new Array();
 messages[0] = "Has cancelado la entrada de datos.O eres menor de edad , hasta pronto <br>";
 messages[1] = "Selección inválida";
 messages[2] = "Selección inválida. Por favor, selecciona un plan válido."
+messages[3] = "Lo siento, no podemos ofrecer seguros para usted en estos momentos."
 
 
 //=============================================================
@@ -98,6 +99,18 @@ class PremiumPolicy extends Policy {
         this.totalAmount = this.coverage_01 + this.coverage_02 + this.coverage_03;
     }
 }
+//=============================================================
+ // Control mensajes 
+//=============================================================
+
+function search_message(){
+    
+    for (let m = 0; m <= messages.length; m ++){
+         messages[m]; 
+         
+       }
+    }
+
 
 //=============================================================
 // Planes
@@ -125,7 +138,13 @@ function selectPlan() {
             namePlan = PLAN_PREMIUM;
             return { namePlan: namePlan, ncapital: ncapital };
         default:
-            return messages[1];
+            search_message();
+                if (m = 1){
+                    alert(messages[1]); 
+                    break;
+               }
+          
+        
     }
 }
 //=============================================================
@@ -156,11 +175,16 @@ function monthlyCoverageAmounts(planSelect) {
             return { itemQuantity: 3, currencyPolicy: policyPremium };
 
         default:
-            return messages[1];
+            search_message();
+            if (m = 1){
+                alert(messages[1]); 
+                break;
+           }
 
     }
 
 }
+
 //Ejecucion - objetos
 //****Solicita Datos de Entrada***/
 let firstName = prompt("Ingresa tu nombre");
@@ -260,6 +284,8 @@ document.write(`<center><p> Fecha de la cotizacion  ${SYSTEM_DATE.toLocaleDateSt
 } while (x < 3);
 
 if (x > 2) {
-    alert("Lo siento, no podemos ofrecer seguros para usted en estos momentos.");
+    search_message();
+        if (m = 3){
+            alert(messages[3]);   
+        }    
 }
-
