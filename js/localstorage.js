@@ -9,9 +9,7 @@ function saveUserData() {
     if (isValidAge) {
         const userData = new UserData(firstName, lastName, birthDate);
         localStorage.setItem('userData', JSON.stringify(userData));
-    } else {
-        console.log('La edad no es válida.');
-    }
+    } 
 }
 
 // Escuchar el evento click del formulario
@@ -25,8 +23,6 @@ document.getElementById('submit').addEventListener('click', function (event) {
 function saveDetailsPolicy(policyDetails) {
     if (policyDetails) {
         localStorage.setItem('policyDetails', JSON.stringify(policyDetails));
-    } else {
-        console.log('No se proporcionaron detalles de póliza para guardar en localStorage.');
     }
 }
 

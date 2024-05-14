@@ -61,17 +61,24 @@ function showPolicyDetails() {
     const policyDetails = getDetailsPolicy();
 
     if (policyDetails) {
-        const policyType = policyDetails.policyType || 'Tipo de póliza no definido';
-        const amountNcapital = policyDetails.amountNcapital ? policyDetails.amountNcapital.toFixed(2) : 'Cantidad total no definida';
-        const totalAmountMonth = policyDetails.totalAmountMonth ? policyDetails.totalAmountMonth.toFixed(2) : 'Monto mensual no definido';
-     
-        document.getElementById('card-detail').innerHTML = `
+        const policyType = policyDetails.policyType;
+        const amountNcapital =  policyDetails.amountNcapital.toFixed(2);
+        const totalAmountMonth = policyDetails.totalAmountMonth.toFixed(2);
+
+         document.getElementById('card-detail').innerHTML = `
             <p>Plan: ${policyType}</p>
             <p>Suma Asegurada: ${amountNcapital}</p>
             <p>Monto Mensual: ${totalAmountMonth}</p>
         `;
     } else {
-        console.log('No se encontraron detalles de póliza para mostrar.');
+        const policyType = policyDetails.policyType || 'Tipo de póliza no definido';
+        const amountNcapital = policyDetails.amountNcapital ? policyDetails.amountNcapital.toFixed(2) : 'Cantidad total no definida';
+        const totalAmountMonth = policyDetails.totalAmountMonth ? policyDetails.totalAmountMonth.toFixed(2) : 'Monto mensual no definido';
+        document.getElementById('card-detail').innerHTML = `
+        <p>Plan: ${policyType}</p>
+        <p>Suma Asegurada: ${amountNcapital}</p>
+        <p>Monto Mensual: ${totalAmountMonth}</p>
+    `;
     }
 }
 
@@ -122,7 +129,7 @@ function showDetailCoverage() {
                     </tr>
                     <tr>
                         <th scope="row">Monto premio:</th>
-                        <td>${(policyDetails.totalAmount / 12).toFixed(2)}</td>
+                        <td>${(policyDetails.totalAmountMonth).toFixed(2)}</td>
                     </tr>
                 </tbody>
             </table>
@@ -140,7 +147,14 @@ function showDetailCoverage() {
         //Mostrar footer
         document.getElementById('dateDay').innerHTML = cardHTML;
     } else {
-        console.log('No se encontraron detalles de póliza para mostrar.');
+        let alertPlaceholder;
+        alertPlaceholder = document.getElementById('alertaCoverage')
+
+        if (m = 5) {
+            alert(messages[5], 'danger')     
+        }
+        alert(message, type);
+   
     }
 
 }
