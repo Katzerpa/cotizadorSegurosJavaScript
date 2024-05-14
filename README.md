@@ -34,3 +34,12 @@ Se se agrega en el HTML un Hinperviculo que permitirar volver a cotizar .
   Clase 7 : Funciones de Orden Superior I se aplicaron las funsiones Filter y ForEach para buscar las impresiones de coberturas  
   Clase 8 : Funciones de Orden Superior II se aplicaron las funciones date(); y math.floor para el calculo de la edad 
   Clase 9 : Modelo objetos del documento : interatuando la conexion con impresion al HTML por primera vez se aplico innerHTML para mostrar el mensaje de bienvenida al usuario. 
+
+Tercera Entrega : 
+Para esta entrega se procede a interatuar con eventos y a realizar guardados con el localstorage diseñando plantilla en HTML con bootstrap, generando particiones de archivos en JS.
+ Clase que se tomaron en cuenta para la entrega : 
+  Clase 9 : Modelo objetos del documento  interatuando la conexion con impresion al HTML ,Creando la estructura de HTML , creando webelement por medio de cual se realizaran las entradas y salidas de Datos.
+  CLase 10 : Eventos definicion de interaciones del usuario por medio de acciones como click sobre los botones como guadar, mostrar mensaje de error y mostrar. 
+  Clase 11:  Storage & JSON forma de almacenar datos en el navegador sin necesidad de tener un servidor de base de datos como guardar datos de la cotizacion  y mostrar por le interfaz datos guardados.
+ 
+  
