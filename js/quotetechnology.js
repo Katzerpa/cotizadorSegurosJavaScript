@@ -45,15 +45,17 @@ button.addEventListener('click', function () {
     const policyDetails = getDetailsPolicy();
     if (policyDetails) {
         saveDetailsPolicy(policyDetails);
-        Toastify({
-            text: 'Se enviaron datos de cotización correctamente!',
-            close: true,
-            className: 'toast-success',
-            position: "center", 
-            gravity: "bottom", // `top` or `bottom`
-            stopOnFocus: true,
-            duration: 1000
-        }).showToast();
+         setTimeout(()=>{
+            Toastify({
+                text: 'Se enviaron datos de cotización correctamente!',
+                close: true,
+                className: 'toast-success',
+                position: "center", 
+                gravity: "bottom", // `top` or `bottom`
+                stopOnFocus: true,
+                duration: 1000
+            }).showToast();
+         },800); // delay ficticio      
     } else {
         Toastify({
             text: 'No se encontraron detalles de póliza para guardar en el localStorage! \n Intenta nuevamente',

@@ -9,6 +9,7 @@ function saveUserData() {
     if (isValidAge) {
         const userData = new UserData(firstName, lastName, birthDate);
         localStorage.setItem('userData', JSON.stringify(userData));
+        setTimeout(()=>{
         Toastify({
             text: 'Tus datos se enviaron correctamente!',
             close: true,
@@ -18,6 +19,7 @@ function saveUserData() {
             stopOnFocus: true,
             duration: 1000
         }).showToast();
+    },800); // delay ficticio  
     } 
 }
 
