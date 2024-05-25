@@ -45,8 +45,24 @@ button.addEventListener('click', function () {
     const policyDetails = getDetailsPolicy();
     if (policyDetails) {
         saveDetailsPolicy(policyDetails);
+        Toastify({
+            text: 'Se enviaron datos de cotización correctamente!',
+            close: true,
+            className: 'toast-success',
+            position: "center", 
+            gravity: "bottom", // `top` or `bottom`
+            stopOnFocus: true,
+            duration: 1000
+        }).showToast();
     } else {
-        console.log('No se encontraron detalles de póliza para guardar en el localStorage.');
+        Toastify({
+            text: 'No se encontraron detalles de póliza para guardar en el localStorage! \n Intenta nuevamente',
+            close: true,
+            className: 'toast-danger',
+            position: "center", 
+            gravity: "bottom", // `top` or `bottom`
+            duration: 2000
+        }).showToast();
     }
 
     // Mostrar los detalles de la cobertura en la cotización
@@ -62,10 +78,10 @@ function showPolicyDetails() {
 
     if (policyDetails) {
         const policyType = policyDetails.policyType;
-        const amountNcapital =  policyDetails.amountNcapital.toFixed(2);
+        const amountNcapital = policyDetails.amountNcapital.toFixed(2);
         const totalAmountMonth = policyDetails.totalAmountMonth.toFixed(2);
 
-         document.getElementById('card-detail').innerHTML = `
+        document.getElementById('card-detail').innerHTML = `
             <p>Plan: ${policyType}</p>
             <p>Suma Asegurada: ${amountNcapital}</p>
             <p>Monto Mensual: ${totalAmountMonth}</p>
@@ -141,20 +157,24 @@ function showDetailCoverage() {
 <div class="card-footer text-white justify-content-center bg-secondary">
 <center><p> Fecha de la cotizacion  ${SYSTEM_DATE.toLocaleDateString()} </p><center></div>
     `;
-
         // Mostrar la tabla HTML
         document.getElementById('coverageTable').innerHTML = tableHTML;
         //Mostrar footer
         document.getElementById('dateDay').innerHTML = cardHTML;
     } else {
-        let alertPlaceholder;
-        alertPlaceholder = document.getElementById('alertaCoverage')
-
+        search_message();
         if (m = 5) {
-            alert(messages[5], 'danger')     
+            Toastify({
+                text: messages[5],
+                close: true,
+                className: 'toast-danger',
+                position: "center", 
+                gravity: "bottom", // `top` or `bottom`
+                duration: 1000
+            }).showToast();
+
         }
-        alert(message, type);
-   
+
     }
 
 }

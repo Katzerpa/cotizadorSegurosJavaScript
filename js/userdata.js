@@ -24,7 +24,15 @@ function showUserData() {
         <p>Fecha de Nacimiento: ${formattedBirthDate}</p>
     `;
     } else {
-        console.log('No se encontraron datos almacenados en localStorage.');
+    
+        Toastify({
+            text: 'No se encontraron detalles del Cliente para Mostrar! \n Intenta nuevamente',
+            close: true,
+            className: 'toast-danger',
+            position: "center", 
+            gravity: "bottom", // `top` or `bottom`
+            duration: 1000
+        }).showToast();
     }
 }
 

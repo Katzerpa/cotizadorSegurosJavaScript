@@ -9,6 +9,15 @@ function saveUserData() {
     if (isValidAge) {
         const userData = new UserData(firstName, lastName, birthDate);
         localStorage.setItem('userData', JSON.stringify(userData));
+        Toastify({
+            text: 'Tus datos se enviaron correctamente!',
+            close: true,
+            className: 'toast-success',
+            position: "center", 
+            gravity: "bottom", // `top` or `bottom`
+            stopOnFocus: true,
+            duration: 1000
+        }).showToast();
     } 
 }
 
