@@ -90,7 +90,6 @@ function isValid(fieldId) {
         case 'phone':
             const phone = DOMById('phone').value.trim();
             return phone.length === 8 || phone.length === 10;
-
         case 'inputPostalCode':
             const inputPostalCode = DOMById('inputPostalCode').value.trim();
             if (isNaN(inputPostalCode)) return false;
@@ -155,7 +154,6 @@ document.getElementById('inputAddress').addEventListener('input', function () {
 });
 
 
-
 document.getElementById('phone').addEventListener('input', function () {
     const isValidPhone = isValid('phone');
     const phoneError = document.getElementById('phoneError');
@@ -179,6 +177,29 @@ document.getElementById('inputPostalCode').addEventListener('input', function ()
         document.getElementById('sendData').classList.remove('disabled');
     }
 });
+
+function isValidEmail(email) {
+    const expr = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return expr.test(email);
+}
+
+function validateEmailInput() {
+    const inputEmail = DOMById('inputEmail').value.trim();
+    const isValidInputEmail = isValidEmail(inputEmail);
+    const inputEmailError = DOMById('inputEmailError');
+    const sendDataButton = DOMById('sendData');
+    if (!isValidInputEmail) {
+        inputEmailError.style.display = 'inline';
+        sendDataButton.classList.add('disabled');
+    } else {
+        inputEmailError.style.display = 'none';
+        sendDataButton.classList.remove('disabled');
+    }
+}
+
+DOMById('inputEmail').addEventListener('input', validateEmailInput);
+
+console.log(inputEmail);
 
 
 function validateForm() {
