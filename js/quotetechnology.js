@@ -45,23 +45,23 @@ button.addEventListener('click', function () {
     const policyDetails = getDetailsPolicy();
     if (policyDetails) {
         saveDetailsPolicy(policyDetails);
-         setTimeout(()=>{
+        setTimeout(() => {
             Toastify({
                 text: 'Se enviaron datos de cotización correctamente!',
                 close: true,
                 className: 'toast-success',
-                position: "center", 
+                position: "center",
                 gravity: "bottom", // `top` or `bottom`
                 stopOnFocus: true,
                 duration: 1000
             }).showToast();
-         },800); // delay ficticio      
+        }, 800); // delay ficticio    
     } else {
         Toastify({
             text: 'No se encontraron detalles de póliza para guardar en el localStorage! \n Intenta nuevamente',
             close: true,
             className: 'toast-danger',
-            position: "center", 
+            position: "center",
             gravity: "bottom", // `top` or `bottom`
             duration: 2000
         }).showToast();
@@ -89,7 +89,9 @@ function showPolicyDetails() {
             <p>Monto Mensual: ${totalAmountMonth}</p>
         `;
     } else {
+        if (policyType!=null){
         const policyType = policyDetails.policyType || 'Tipo de póliza no definido';
+        }
         const amountNcapital = policyDetails.amountNcapital ? policyDetails.amountNcapital.toFixed(2) : 'Cantidad total no definida';
         const totalAmountMonth = policyDetails.totalAmountMonth ? policyDetails.totalAmountMonth.toFixed(2) : 'Monto mensual no definido';
         document.getElementById('card-detail').innerHTML = `
@@ -170,7 +172,7 @@ function showDetailCoverage() {
                 text: messages[5],
                 close: true,
                 className: 'toast-danger',
-                position: "center", 
+                position: "center",
                 gravity: "bottom", // `top` or `bottom`
                 duration: 1000
             }).showToast();
@@ -180,3 +182,29 @@ function showDetailCoverage() {
     }
 
 }
+
+/****evento regresar a seleccion plan  */
+
+document.getElementById('sendcotizar').addEventListener('click', function (event) {
+    event.preventDefault();
+    // Habilitar el formulario de selección de plan
+    document.getElementById('selectPlanForm').classList.remove('d-none');
+    document.getElementById('showSummary').classList.add('d-none');
+    // Mostrar los detalles de la cobertura en la cotización
+    enablePlanSelection();
+});
+
+/****evento contratar plan  */
+
+document.getElementById('fillData').addEventListener('click', function (event) {
+    event.preventDefault();
+    // Habilitar el formulario de selección de plan
+    document.getElementById('showSummary').classList.add('d-none');
+    document.getElementById('addressForm').classList.remove('d-none');
+    // Llamar a la función para poblar el select con las provincias
+    showProvinces();
+    populateMaritalStatusSelect();
+    showCountries();
+    showUserDataForm();
+    loadFromLocalStorage();
+});

@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
   <link rel="stylesheet" href="./css/toast.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css">
 </head>
 <body>
   <header>
@@ -146,8 +147,8 @@
           <div class="row col-md-12 d-inline-block">
             <div class="card">
               <h5 class="card-title text-center mb-0 m-3">Elige el mejor plan para vos </h5>
-              <div class="card-group justify-content-center mt-3">
-                <div class="card mb-6" style="max-width: 18rem;">
+              <div class="card-group justify-content-center mt-3 m-3 w-100">
+                <div class="card mb-6" style="max-width: 30rem;">
                   <div class="card-header text-white bg-secondary">
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
@@ -160,7 +161,7 @@
                   <div class="card-body" id="card-body01">
                   </div>
                 </div>
-                <div class="card mb-6" style="max-width: 18rem;">
+                <div class="card mb-6" style="max-width: 30rem;">
                   <div class="card-header text-white bg-secondary">
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
@@ -173,7 +174,7 @@
                   <div class="card-body" id="card-body02">
                   </div>
                 </div>
-                <div class="card mb-6" style="max-width: 18rem;">
+                <div class="card mb-6" style="max-width: 30rem;">
                   <div class="card-header text-white bg-secondary">
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
@@ -187,9 +188,14 @@
                   </div>
                 </div>
               </div>
+              <div class="row p-3 b-0">
+              <div class="d-grid gap-2 col-6 mx-auto m-3">
+                <button id="btn-close" type="submit" class="btn btn-primary ">salir</button>
+              </div>
               <div class="d-grid gap-2 col-6 mx-auto m-3">
                 <button id="bnt-cotizar" type="submit" class="btn btn-primary disabled">Cotizar</button>
               </div>
+            </div>
               <div class="text-center mb-0 m-3">
                 <p>(*) Cubre dos eventos por año. El segundo evento hasta 50% de la suma asegurada. El costo no incluye
                   sellados.</p>
@@ -202,9 +208,9 @@
     <section id="resumen">
       <div class="container b-0 d-none" id="showSummary">
         <div class="justify-content-center mt-5 b-0">
-          <div class="row col-md-12  m-0 b-0 d-inline-block">
-            <div class="card m-0">
-              <h5 class="card-header text-white justify-content-center bg-secondary">Detalle de la cotización</h5>
+          <div class="row col-md-12  m-0 b-0 ">
+            <div class="col-sm-12">
+              <h5 class="card-header p-3 text-white justify-content-center bg-secondary">Detalle de la cotización</h5>
               <div class="row">
                 <div class="col-sm-6">
                   <div class="card">
@@ -226,21 +232,128 @@
                 </div>
               </div>
               <div class="card">
-                <h5 class="card-header text-white justify-content-center bg-secondary">Detalle de las Coberturas</h5>
+                <h5 class="card-header p-3 text-white justify-content-center bg-secondary">Detalle de las Coberturas</h5>
                 <div class="card-body">
                   <div class="col-sm-12" id="coverageTable"></div>
                   <div id="alertaCoverage"></div>
                 </div>
                 <div id ="dateDay">
                 </div>
+                <div class="row p-3 b-0">
+                  <div class="d-grid gap-2 col-6 mx-auto">
+                    <button id ="sendcotizar" type="button" class="btn btn-primary">Volver</button>
+                  </div>
+                  <div class="d-grid gap-2 col-6 mx-auto">
+                    <button id ="fillData" type="submit" class="btn btn-primary">Contratar</button>
+                  </div>
+
+                </div>
+                
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
+      <!-- ----------------formulario datos direccion contratacion  -->
+      <section id="address">
+        <div class="container d-none" id="addressForm">
+        <div><h5 class="card-title text-center mb-5 m-3"> !Gracias por elergirnos! para finalizar completá los datos  </h5></div>
+        <form class="row g-3 needs-validation mb-15 m-15">
+          <div class="col-md-6">
+            <label for="documetDni" class="form-label">DNI</label>
+            <input type="number" class="form-control" id="documetDni" placeholder="Ingresa tu DNI" required>
+            <small id="dniError" class="text-danger" style="display: none;">DNI inválido.</small>
+          </div>
+          <div class="col-md-6">
+            <label for="documetCuit" class="form-label">CUIT</label>
+            <input type="number" class="form-control disabled" id="documetCuit" placeholder="Ingresa tu CUIT" required >
+            <small id="cuitError" class="text-danger" style="display: none;">CUIT inválido.</small>
+          </div>
+          <div class="col-md-6">
+            <label for="firstName" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="firstNameForm" placeholder="Ingresa tu nombre">
+          </div>
+          <div class="col-md-6">
+            <label for="lastName" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="lastNameForm" placeholder="Ingresa tu apellido">
+          </div>
+          <div class="col-md-6">
+            <label for="birthDate" class="form-label">Fecha de Nacimiento</label>
+            <input type="date" class="form-control" id="birthDateForm">
+            <div id="alertaFechaInvalida"></div>
+          </div>
+          <div class="col-md-6">
+            <label for="inputMaritalStatus" class="form-label">Estado Civil</label>
+            <select id="inputMaritalStatus" class="form-select"  required>
+              <option selected disabled value="">Selecciona Estado Civil...</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="inputNationality" class="form-label">Nacionalidad</label>
+            <select id="inputNationality" class="form-select"  required>
+              <option selected disabled value="">Selecciona Nacionalidad...</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="placeOfBirth" class="form-label">Lugar de Nacimiento</label>
+            <input type="text" class="form-control" id="placeOfBirth" placeholder="Ingresa tu Lugar de Nacimiento" required>
+            <small id="placeOfBirthError" class="text-danger" style="display: none;">Lugar de Nacimiento inválido.</small>
+          </div>
+          <div class="col-md-6">
+            <label for="inputEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="inputEmail"  required>
+          </div>
+          <div class="col-md-6">
+            <label for="phone" class="form-label">Numero de Teléfono</label>
+            <input type="number" class="form-control" id="phone" placeholder="Ingresa tu Numero de Teléfono"  required>
+            <small id="phoneError" class="text-danger" style="display: none;">Numero de Teléfono inválido.</small>
+          </div>
+          <div class="col-12">
+            <label for="inputAddress" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="inputAddress" placeholder="Ingresa tu dirección : Calle , altura " required>
+            <small id="inputAddressError" class="text-danger" style="display: none;">Ingresa tu dirección : Calle , altura  Valida.</small>
+          </div>
+          <div class="col-md-4">
+            <label for="inputProvinces" class="form-label">Provincia</label>
+            <select id="inputProvinces" class="form-select" required>
+              <option selected disabled value="">Selecciona Provincia...</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="inputLocalities" class="form-label">Localidad</label>
+            <select id="inputLocalities" class="form-select"  required>
+              <option  selected disabled value="">Selecciona Localidad...</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="inputPostalCode" class="form-label">Código Postal</label>
+            <input type="number" class="form-control" id="inputPostalCode"  placeholder="Ingresa Código Postal"  required>
+            <small id="inputPostalCodeError" class="text-danger" style="display: none;">Código Postal Invalido.</small>
+          </div>
+          <div class="d-grid gap-2 col-6 mx-auto">
+            <button id ="backButton" type="button" class="btn btn-primary">Volver</button>
+          </div>
+          <div class="d-grid gap-2 col-6 mx-auto">
+            <button id ="sendData" type="submit" class="btn btn-primary disabled">Continuar</button>
+          </div>
+        </form>
+        
+      </div>
+      </section>
+
+      <footer class="container-fluid text-white bg-secondary p-4 mt-5">
+        <div class="text-center">
+            <div class="p-0 py-2 py-md-3">
+                <p class="m-0">Cotizador Online - 2024</p>
+                <p class="m-0">Katiuska Zerpa</p>
+                <p class="small mt-2 mt-md-3 m-0">Disclaimer: Esta página es solo una simulación con fines educativos, no pretende brindar precios reales.</p>
+            </div>
+        </div>
+    </footer>
     <script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.all.min.js"></script>
     <script src="./js/messages.js"></script>
     <script src="./js/validations.js"></script>
     <script src="./js/userdata.js"></script>
@@ -248,6 +361,9 @@
     <script src="./js/radioselect.js"></script>
     <script src="./js/quotetechnology.js"></script>
     <script src="./js/localstorage.js"></script>
+    <script src="./js/selector.js"></script>
+    <script src="./js/clientdata.js"></script>
+    <script src="./js/cleanform.js"></script>
 </body>
 
 </html>

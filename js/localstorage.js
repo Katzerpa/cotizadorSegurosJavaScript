@@ -48,3 +48,78 @@ document.getElementById('bnt-cotizar').addEventListener('click', function (event
     event.preventDefault();
     saveDetailsPolicy();
 });
+
+
+/**Guaradr datos del formulario datos cliente contratante */
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Cargar datos desde localStorage al iniciar la página
+    loadFromLocalStorage();
+
+    // Obtener todos los inputs y selects del formulario
+    const inputs = document.querySelectorAll('#addressForm input, #addressForm select');
+
+    inputs.forEach(input => {
+        // Agregar evento input o change a cada campo
+        if (input.tagName === 'SELECT') {
+            input.addEventListener('change', () => {
+                saveToLocalStorage(input.id, true);
+            });
+        } else {
+            input.addEventListener('input', () => {
+                saveToLocalStorage(input.id);
+            });
+        }
+    });
+});
+
+function saveToLocalStorage(fieldId, isSelect = false) {
+    let value;
+    if (isSelect) {
+        const selectElement = document.getElementById(fieldId);
+        value = selectElement.options[selectElement.selectedIndex].text;
+        document.getElementById('sendData').classList.remove('disabled');
+    } else {
+        value = document.getElementById(fieldId).value.trim();
+    }
+    localStorage.setItem(fieldId, value);
+}
+
+function loadFromLocalStorage() {
+    const fields = [
+        'documetDni', 'documetCuit', 'firstNameForm', 'lastNameForm',
+        'birthDateForm', 'inputMaritalStatus', 'inputNationality',
+        'placeOfBirth', 'inputEmail', 'phone', 'inputAddress',
+        'inputProvinces', 'inputLocalities', 'inputPostalCode'
+    ];
+
+    fields.forEach(fieldId => {
+        const storedValue = localStorage.getItem(fieldId);
+        if (storedValue) {
+            const element = document.getElementById(fieldId);
+            if (element.tagName === 'SELECT') {
+                for (let i = 0; i < element.options.length; i++) {
+                    if (element.options[i].text === storedValue) {
+                        element.selectedIndex = i;
+                        break;
+                    }
+                }
+            } else {
+                element.value = storedValue;
+            }
+        }
+    });
+}
+
+function clearLocalStorage() {
+    localStorage.clear();
+    Toastify({
+        text: 'Se limpiaron los datos correctamente!',
+        close: true,
+        className: 'toast-success',
+        position: "center", 
+        gravity: "bottom", // `top` or `bottom`
+        stopOnFocus: true,
+        duration: 1000
+    }).showToast();
+}

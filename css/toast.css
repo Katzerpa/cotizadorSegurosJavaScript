@@ -26,3 +26,19 @@
         padding: 12px 30px 12px 12px;
     }
     
+    footer {
+        position: relative;
+        bottom: 0;
+        width: 100%;
+    }
+    
+    footer .text-center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .mt-5 {
+        margin-top: 3rem !important; /* Agrega espacio extra entre los botones y el footer */
+    }
