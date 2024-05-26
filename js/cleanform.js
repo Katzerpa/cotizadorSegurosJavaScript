@@ -1,3 +1,6 @@
+//=======================================================================
+//Limpiar Formularios
+//=======================================================================
 function cleanformuser() {
     document.getElementById('firstName').value = '';
     document.getElementById('lastName').value = '';
@@ -16,4 +19,5 @@ function cleanformuser() {
     document.getElementById('inputLocalities').value = '';
     document.getElementById('inputPostalCode').value = '';
     document.getElementById('birthDateForm').value = '';
+    initializeRadioButton();
 }

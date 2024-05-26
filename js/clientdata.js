@@ -1,7 +1,7 @@
 
-
-
-// Función para mostrar los datos en un modal SweetAlert
+//=======================================================================
+//Función para mostrar los datos en un modal SweetAlert
+//=======================================================================
 
 function showDataInModal() {
     const dni = document.getElementById('documetDni').value;
@@ -21,17 +21,12 @@ function showDataInModal() {
 
     // Obtener día, mes y año del input para dar formato a la fecha 
     let fdateValue = birthDateInput;
-    // Dividir la fecha de nacimiento en día, mes y año
-    
     let partsDate = fdateValue.split("-");
-    let year = parseInt(partsDate[0], 10); // Parsear año como entero base 10
-    let month = parseInt(partsDate[1], 10) - 1; // Restar 1 al mes porque los meses en JavaScript son 0-indexados
+    let year = parseInt(partsDate[0], 10);
+    let month = parseInt(partsDate[1], 10) - 1;
     let day = parseInt(partsDate[2], 10);
-    // Formatear la fecha como DD/MM/YYYY
     let formattedDate = `${day.toString().padStart(2, '0')}/${(month + 1).toString().padStart(2, '0')}/${year}`;
-    // Crear un objeto Date con la fecha de nacimiento
     let birthDate = `${day}/${month}/${year}`;
-    // Formatear la fecha en formato DD/MM/YYYY
 
     let modalContent = `
     <div class="container">
@@ -111,7 +106,7 @@ function showDataInModal() {
     });
 
     swalWithBootstrapButtons.fire({
-        width: '50%', 
+        width: '50%',
         title: '¡Excelente! verificar antes de registrar tus datos',
         html: modalContent,
         icon: 'info',
@@ -121,46 +116,43 @@ function showDataInModal() {
         reverseButtons: true
     }).then((result) => {
         if (result.isConfirmed) {
-                Swal.fire({
-                    title: 'Excelente!',
-                    text: 'Tus datos han sido registrados exitosamente, te estara llegando a tu Email Link de Pago.',
-                    icon: 'success'
-                });
-                setTimeout(() => {
-                cleanForm();
-            }, 3000);
-    
-            
-        }
-        
-    });
+            setTimeout(() => {
+            Swal.fire({
+                title: 'Excelente!',
+                text: 'Tus datos han sido registrados exitosamente, te estara llegando a tu Email Link de Pago.',
+                icon: 'success',
+                timer: 1000
+            });
+              cleanForm();
+            },1000);
 
+
+        }
+
+    });
 }
 
-
-function cleanForm(){
+function cleanForm() {
     document.getElementById('userDataForm').classList.remove('d-none');
     document.getElementById('addressForm').classList.add('d-none');
-     clearLocalStorage();
-     cleanformuser();
+    clearLocalStorage();
+    cleanformuser();
 }
 
 
-// Escuchar el evento click del formulario
+// Escuchar el evento click del formulario Enviar datos
 document.getElementById('sendData').addEventListener('click', function (event) {
     event.preventDefault();
     if (validateForm()) {
         showDataInModal();
-    } 
+    }
 
 });
 
+// Escuchar el evento click del formulario Volver a resumen 
 document.addEventListener('DOMContentLoaded', () => {
-    // Agregar evento click al botón
     document.getElementById('backButton').addEventListener('click', () => {
-        // Ocultar el formulario actual
         document.getElementById('addressForm').classList.add('d-none');
-        // Mostrar el nuevo formulario
         document.getElementById('showSummary').classList.remove('d-none');
         showPolicyDetails();
         showUserData();

@@ -1,3 +1,6 @@
+//=======================================================================
+// Gestor de Validaciones
+//=======================================================================
 
 let fdateBirthDate = document.getElementById("birthDate");
 let x = 0;
@@ -8,7 +11,7 @@ alertTrigger.addEventListener('click', function () {
     search_message();
 })
 
-// Habilitar el botón cuando se completan todos los campos requeridos
+
 document.getElementById('formulario').addEventListener('input', function () {
     const firstName = document.getElementById('firstName').value;
     const lastName = document.getElementById('lastName').value;
@@ -22,22 +25,17 @@ document.getElementById('formulario').addEventListener('input', function () {
     }
 });
 
-//-------------Validad edad 
+//-------------Validad edad --------------------------------------
 
 function calculateAge() {
     let fdateValue = document.getElementById("birthDate").value;
-    // Dividir la fecha de nacimiento en día, mes y año
     let partsDate = fdateValue.split("-");
     let year = parseInt(partsDate[0]);
-    let month = parseInt(partsDate[1]) - 1; // Restar 1 al mes porque los meses en JavaScript son 0-indexados
+    let month = parseInt(partsDate[1]) - 1;
     let day = parseInt(partsDate[2]);
-    // Crear un objeto Date con la fecha de nacimiento
     let birthDate = new Date(year, month, day);
-    // Obtener la fecha actual
     let currentDate = new Date();
-    // Calcular la diferencia en milisegundos      
     let differenceMilliseconds = currentDate - birthDate;
-    // Convertir la diferencia de milisegundos a años   
     let inputAge = Math.floor(differenceMilliseconds / (1000 * 60 * 60 * 24 * 365));
     return validAge(inputAge);
 
@@ -46,9 +44,7 @@ function calculateAge() {
 function validAge(age) {
 
     if (age > 17) {
-        // Ocultar formulario de datos para cotizar
         document.getElementById('userDataForm').classList.add('d-none');
-        // Mostrar formulario para seleccionar plan
         enablePlanSelection();
         return true;
 
@@ -82,16 +78,16 @@ function isValid(fieldId) {
         case 'placeOfBirth':
             const placeOfBirth = DOMById('placeOfBirth').value.trim();
             if (!isNaN(placeOfBirth)) return false;
-            if(placeOfBirth.length < 5) return false;
+            if (placeOfBirth.length < 5) return false;
             return true;
-    
+
         case 'inputAddress':
             const inputAddress = DOMById('inputAddress').value.trim();
             if (!isNaN(inputAddress)) return false;
-            if(inputAddress.length < 10) return false;
+            if (inputAddress.length < 10) return false;
             return true;
 
-       case 'phone':
+        case 'phone':
             const phone = DOMById('phone').value.trim();
             return phone.length === 8 || phone.length === 10;
 
@@ -118,7 +114,7 @@ document.getElementById('documetDni').addEventListener('input', function () {
     } else {
         dniError.style.display = 'none';
         document.getElementById('sendData').classList.remove('disabled');
-       
+
     }
 });
 
@@ -202,27 +198,26 @@ function validateForm() {
     const birthDateInput = document.getElementById('birthDateForm').value;
 
     if (!dni || !cuit || !firstName || !lastName || !maritalStatus || !nationality || !placeOfBirth || !email || !phone || !address || !province || !locality || !postalCode || !birthDateInput) {
-      document.getElementById('sendData').classList.remove('disabled');
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Por favor, completa todos los campos.'
-    });
+        document.getElementById('sendData').classList.remove('disabled');
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Por favor, completa todos los campos.'
+        });
 
-      return false;
+        return false;
     }
 
     return true;
-    
+
 }
 
 
 /**Escucha el evento salir */
 document.getElementById('btn-close').addEventListener('click', function (event) {
     event.preventDefault();
-    // Habilitar el formulario de selección de plan
     document.getElementById('userDataForm').classList.remove('d-none');
     document.getElementById('selectPlanForm').classList.add('d-none');
-    //limpiar formularo
-       clearLocalStorage();
+    cleanformuser();
+    clearLocalStorage();
 });

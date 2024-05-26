@@ -1,9 +1,13 @@
+
+//=======================================================================
+//Selector de plan y cotizar
+//=======================================================================
+
 // Recuperar el botón de cotizar
-let button = document.getElementById('bnt-cotizar');
+let button = document.getElementById('btnQuote');
 
 // Función para guardar detalle de la poliza
 function savePolicyDetails(selectValue) {
-    // Crear una instancia de la política según el plan seleccionado
     let policy;
     switch (selectValue) {
         case "1":
@@ -17,10 +21,8 @@ function savePolicyDetails(selectValue) {
             break;
     }
 
-    // Calcular las coberturas mensuales
     policy.calculateMonthlyCoverageAmounts();
 
-    // Crear el objeto policyDetails con los resultados
     const policyDetails = {
         policyType: policy.policyType,
         amountNcapital: policy.amountNcapital,
@@ -30,18 +32,14 @@ function savePolicyDetails(selectValue) {
         totalAmount: policy.totalAmount,
         totalAmountMonth: policy.totalAmountMonth
     };
-
-    // Guardar los detalles de la póliza en el localStorage
     saveDetailsPolicy(policyDetails);
 }
 
 // Escuchar el evento click del botón de cotizar
+
 button.addEventListener('click', function () {
-    // Habilitar el formulario de selección de plan
     document.getElementById('selectPlanForm').classList.add('d-none');
     document.getElementById('showSummary').classList.remove('d-none');
-
-    // Recuperar los detalles de la póliza y guardarlos en localStorage
     const policyDetails = getDetailsPolicy();
     if (policyDetails) {
         saveDetailsPolicy(policyDetails);
@@ -51,23 +49,21 @@ button.addEventListener('click', function () {
                 close: true,
                 className: 'toast-success',
                 position: "center",
-                gravity: "bottom", // `top` or `bottom`
+                gravity: "bottom",
                 stopOnFocus: true,
                 duration: 1000
             }).showToast();
-        }, 800); // delay ficticio    
+        }, 800);
     } else {
         Toastify({
             text: 'No se encontraron detalles de póliza para guardar en el localStorage! \n Intenta nuevamente',
             close: true,
             className: 'toast-danger',
             position: "center",
-            gravity: "bottom", // `top` or `bottom`
+            gravity: "bottom",
             duration: 2000
         }).showToast();
     }
-
-    // Mostrar los detalles de la cobertura en la cotización
     showPolicyDetails();
     showUserData();
     showDetailCoverage();
@@ -89,8 +85,8 @@ function showPolicyDetails() {
             <p>Monto Mensual: ${totalAmountMonth}</p>
         `;
     } else {
-        if (policyType!=null){
-        const policyType = policyDetails.policyType || 'Tipo de póliza no definido';
+        if (policyType != null) {
+            const policyType = policyDetails.policyType || 'Tipo de póliza no definido';
         }
         const amountNcapital = policyDetails.amountNcapital ? policyDetails.amountNcapital.toFixed(2) : 'Cantidad total no definida';
         const totalAmountMonth = policyDetails.totalAmountMonth ? policyDetails.totalAmountMonth.toFixed(2) : 'Monto mensual no definido';
@@ -106,19 +102,15 @@ function showDetailCoverage() {
 
     const policyDetails = getDetailsPolicy();
 
-    // Verificar si se encontraron detalles de la póliza en el local storage
     if (policyDetails) {
-        // Obtener las coberturas del objeto de detalles de la póliza
         let coverages = [
             { name: "Robo Celular", amount: policyDetails.coverage_01 },
             { name: "Reparación Celular", amount: policyDetails.coverage_02 },
             { name: "Reposición de Celular", amount: policyDetails.coverage_03 }
         ];
 
-        // Filtrar las coberturas que tienen un monto mayor que cero
         let filteredCoverages = coverages.filter(coverage => coverage.amount > 0);
 
-        // Crear la tabla HTML con Bootstrap
         let tableHTML = `
         <div class="table-responsive">
             <table class="table table-striped">
@@ -131,7 +123,6 @@ function showDetailCoverage() {
                 <tbody>
     `;
 
-        // Agregar filas para cada cobertura
         filteredCoverages.forEach(coverage => {
             tableHTML += `
             <tr>
@@ -141,7 +132,6 @@ function showDetailCoverage() {
         `;
         });
 
-        // Agregar filas para el monto total anual y el monto del premio
         tableHTML += `
                     <tr>
                         <th scope="row">Monto total anual:</th>
@@ -156,14 +146,11 @@ function showDetailCoverage() {
         </div>
         
     `;
-        // agregar footer
         let cardHTML = `
 <div class="card-footer text-white justify-content-center bg-secondary">
 <center><p> Fecha de la cotizacion  ${SYSTEM_DATE.toLocaleDateString()} </p><center></div>
     `;
-        // Mostrar la tabla HTML
         document.getElementById('coverageTable').innerHTML = tableHTML;
-        //Mostrar footer
         document.getElementById('dateDay').innerHTML = cardHTML;
     } else {
         search_message();
@@ -173,7 +160,7 @@ function showDetailCoverage() {
                 close: true,
                 className: 'toast-danger',
                 position: "center",
-                gravity: "bottom", // `top` or `bottom`
+                gravity: "bottom",
                 duration: 1000
             }).showToast();
 
@@ -187,10 +174,8 @@ function showDetailCoverage() {
 
 document.getElementById('sendcotizar').addEventListener('click', function (event) {
     event.preventDefault();
-    // Habilitar el formulario de selección de plan
     document.getElementById('selectPlanForm').classList.remove('d-none');
     document.getElementById('showSummary').classList.add('d-none');
-    // Mostrar los detalles de la cobertura en la cotización
     enablePlanSelection();
 });
 
@@ -198,10 +183,8 @@ document.getElementById('sendcotizar').addEventListener('click', function (event
 
 document.getElementById('fillData').addEventListener('click', function (event) {
     event.preventDefault();
-    // Habilitar el formulario de selección de plan
     document.getElementById('showSummary').classList.add('d-none');
     document.getElementById('addressForm').classList.remove('d-none');
-    // Llamar a la función para poblar el select con las provincias
     showCountries();
     populateMaritalStatusSelect();
     showProvinces();

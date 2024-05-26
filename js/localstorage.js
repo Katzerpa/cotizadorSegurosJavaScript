@@ -1,10 +1,13 @@
+
+//=======================================================================
+// Gestor Localstorange
+//=======================================================================
+
 function saveUserData() {
-    // Obtener los valores del formulario
     const firstName = document.getElementById('firstName').value;
     const lastName = document.getElementById('lastName').value;
     const birthDate = document.getElementById('birthDate').value;
 
-    // Validar la edad
     const isValidAge = calculateAge(birthDate);
     if (isValidAge) {
         const userData = new UserData(firstName, lastName, birthDate);
@@ -15,11 +18,11 @@ function saveUserData() {
             close: true,
             className: 'toast-success',
             position: "center", 
-            gravity: "bottom", // `top` or `bottom`
+            gravity: "bottom", 
             stopOnFocus: true,
             duration: 1000
         }).showToast();
-          },800); // delay ficticio  
+          },800);
     } 
 }
 
@@ -29,7 +32,6 @@ document.getElementById('submit').addEventListener('click', function (event) {
     saveUserData();
 });
 
-//let policyDetails; // Definición en el ámbito global
 
 function saveDetailsPolicy(policyDetails) {
     if (policyDetails) {
@@ -37,30 +39,26 @@ function saveDetailsPolicy(policyDetails) {
     }
 }
 
-// Función para recuperar los detalles de la póliza
 function getDetailsPolicy() {
     const storedPolicyDetails = localStorage.getItem('policyDetails');
     return storedPolicyDetails ? JSON.parse(storedPolicyDetails) : null;
 }
 
 // Escuchar el evento click del botón de cotización
-document.getElementById('bnt-cotizar').addEventListener('click', function (event) {
+document.getElementById('btnQuote').addEventListener('click', function (event) {
     event.preventDefault();
     saveDetailsPolicy();
 });
 
 
-/**Guaradr datos del formulario datos cliente contratante */
+//Guaradr datos del formulario datos cliente contratante 
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Cargar datos desde localStorage al iniciar la página
-    loadFromLocalStorage();
+     loadFromLocalStorage();
 
-    // Obtener todos los inputs y selects del formulario
     const inputs = document.querySelectorAll('#addressForm input, #addressForm select');
 
     inputs.forEach(input => {
-        // Agregar evento input o change a cada campo
         if (input.tagName === 'SELECT') {
             input.addEventListener('change', () => {
                 saveToLocalStorage(input.id, true);
@@ -118,7 +116,7 @@ function clearLocalStorage() {
         close: true,
         className: 'toast-success',
         position: "center", 
-        gravity: "bottom", // `top` or `bottom`
+        gravity: "bottom", 
         stopOnFocus: true,
         duration: 1000
     }).showToast();
