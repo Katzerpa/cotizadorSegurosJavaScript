@@ -202,9 +202,9 @@ document.getElementById('fillData').addEventListener('click', function (event) {
     document.getElementById('showSummary').classList.add('d-none');
     document.getElementById('addressForm').classList.remove('d-none');
     // Llamar a la función para poblar el select con las provincias
-    showProvinces();
-    populateMaritalStatusSelect();
     showCountries();
+    populateMaritalStatusSelect();
+    showProvinces();
     showUserDataForm();
     loadFromLocalStorage();
 });
