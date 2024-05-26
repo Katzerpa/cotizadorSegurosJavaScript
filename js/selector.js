@@ -51,6 +51,7 @@ const selectMaritalStatus = document.querySelector("#inputMaritalStatus");
 function getMaritalStatuses() {
     return new Promise((resolve, reject) => {
         const maritalStatuses = [
+            { value: "", label: "Selecciona Estado Civil..." },
             { value: "single", label: "Soltero/a" },
             { value: "married", label: "Casado/a" },
             { value: "divorced", label: "Divorciado/a" },
@@ -74,7 +75,8 @@ async function populateMaritalStatusSelect() {
 
     try {
         const statuses = await getMaritalStatuses();
-
+      // Limpiar las opciones existentes
+        selectMaritalStatus.innerHTML = "";
         statuses.forEach((status) => {
             const option = document.createElement("option");
             option.value = status.value;
