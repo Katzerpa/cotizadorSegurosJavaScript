@@ -17,11 +17,13 @@ document.getElementById('formulario').addEventListener('input', function () {
     const lastName = document.getElementById('lastName').value;
     const birthDate = document.getElementById('birthDate').value;
 
-    if (firstName && lastName && birthDate) {
+    if (!firstName || !lastName || !birthDate) {
 
-        document.getElementById('submit').classList.remove('disabled');
+        document.getElementById('submit').classList.add('disabled');
     } else {
         document.getElementById('submit').classList.remove('disabled');
+       
+
     }
 });
 
@@ -83,7 +85,7 @@ function isValid(fieldId) {
 
         case 'inputAddress':
             const inputAddress = DOMById('inputAddress').value.trim();
-            if (!isNaN(inputAddress)) return false;
+            if (inputAddress === null) return false;
             if (inputAddress.length < 10) return false;
             return true;
 
@@ -199,9 +201,6 @@ function validateEmailInput() {
 
 DOMById('inputEmail').addEventListener('input', validateEmailInput);
 
-console.log(inputEmail);
-
-
 function validateForm() {
     const dni = document.getElementById('documetDni').value;
     const cuit = document.getElementById('documetCuit').value;
@@ -241,4 +240,5 @@ document.getElementById('btn-close').addEventListener('click', function (event) 
     document.getElementById('selectPlanForm').classList.add('d-none');
     cleanformuser();
     clearLocalStorage();
+    document.getElementById('submit').classList.add('disabled');
 });

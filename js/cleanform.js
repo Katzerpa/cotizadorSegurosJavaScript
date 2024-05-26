@@ -20,4 +20,5 @@ function cleanformuser() {
     document.getElementById('inputPostalCode').value = '';
     document.getElementById('birthDateForm').value = '';
     initializeRadioButton();
+    document.getElementById('submit').classList.add('disabled');
 }

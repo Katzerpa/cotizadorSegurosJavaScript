@@ -107,7 +107,7 @@ function showDataInModal() {
 
     swalWithBootstrapButtons.fire({
         width: '50%',
-        title: '¡Excelente! verificar antes de registrar tus datos',
+        title: '¡Excelente! Por favor, verifica tus datos antes de registrarlos.',
         html: modalContent,
         icon: 'info',
         showCancelButton: true,
@@ -118,13 +118,13 @@ function showDataInModal() {
         if (result.isConfirmed) {
             setTimeout(() => {
             Swal.fire({
-                title: 'Excelente!',
-                text: 'Tus datos han sido registrados exitosamente, te estara llegando a tu Email Link de Pago.',
+                title: '¡Excelente!',
+                text: '¡Tus datos han sido registrados con éxito! Pronto recibirás un enlace de pago en tu correo electrónico.',
                 icon: 'success',
-                timer: 1000
+                timer: 2500
             });
               cleanForm();
-            },1000);
+            },1500);
 
 
         }
