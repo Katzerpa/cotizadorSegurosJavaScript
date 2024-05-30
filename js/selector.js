@@ -39,7 +39,7 @@ async function showCountries() {
             className: 'toast-danger',
             position: "center",
             gravity: "bottom",
-            duration: 1000
+            duration: 6000
         }).showToast();
     }
 }
