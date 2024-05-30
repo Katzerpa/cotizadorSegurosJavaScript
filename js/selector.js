@@ -7,11 +7,16 @@
 async function showCountries() {
     const select = document.querySelector("#inputNationality");
     const URL = "https://restcountries.com/v3.1/all";
+    const PATCH = "../sources/restcountries.json"
 
     try {
         const response = await fetch(URL);
         if (!response.ok) {
+           //fallback 
+            response = await fetch(PATCH);
+            if (!response.ok) {
             throw new Error("Error al obtener los datos");
+            }
         }
 
         const data = await response.json();
