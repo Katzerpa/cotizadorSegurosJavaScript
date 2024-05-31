@@ -6,7 +6,7 @@
 
 async function showCountries() {
     const select = document.querySelector("#inputNationality");
-    const PATCH = "../sources/restcountries.json";
+    const PATCH = "/sources/restcountries.json";
     try {
      
             const response = await fetch(PATCH);
