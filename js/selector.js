@@ -6,10 +6,10 @@
 
 async function showCountries() {
     const select = document.querySelector("#inputNationality");
-    const PATCH = "cotizadorSegurosJavaScript/sources/restcountries.json";
+    const JSONLOCAL = "../sources/restcountries.json";
     try {
      
-            const response = await fetch(PATCH);
+            const response = await fetch(JSONLOCAL);
             if (!response.ok) {
             throw new Error("Error al obtener los datos");
             }
