@@ -6,7 +6,7 @@
 
 async function showCountries() {
     const select = document.querySelector("#inputNationality");
-    const JSONLOCAL = "../sources/restcountries.json";
+    const JSONLOCAL = "/cotizadorSegurosJavaScript/sources/restcountries.json";
     try {
      
             const response = await fetch(JSONLOCAL);
